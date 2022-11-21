@@ -14,7 +14,7 @@ npm install --save @arcloud/vehicle-detector-agent-webhook-middleware
 
 ```typescript
 import express, { Express, Request, Response } from 'express';
-import { WebhookEvent, webhookSignatureValidator } from "vehicle-detector-agent-webhook-middleware";
+import { WebhookEvent, webhookSignatureValidator } from "@arcloud/vehicle-detector-agent-webhook-middleware";
 
 const app: Express = express();
 const port = 8080;
@@ -46,7 +46,7 @@ app.listen(port, () => {
 
 ```javascript
 const express = require("express");
-const { webhookSignatureValidator } = require("vehicle-detector-agent-webhook-middleware");
+const { webhookSignatureValidator } = require("@arcloud/vehicle-detector-agent-webhook-middleware");
 
 const app = express();
 const port = 8080;
