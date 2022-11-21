@@ -1,6 +1,6 @@
 {
   "name": "@arcloud/vehicle-detector-agent-webhook-middleware",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Express middleware for parsing Vehicle Detector Agent webhook requests and verifying their signature.",
   "main": "dist/index.js",
   "scripts": {
