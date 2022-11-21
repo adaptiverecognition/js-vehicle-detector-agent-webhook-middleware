@@ -194,14 +194,19 @@ export function webhookSignatureValidator(config: SignatureConfig) {
     });
 
     req.on("end", function () {
-      if (!verify(rawBody, signature, parsedConfig)) {
-        console.log(rawBody)
-        logAndSend(res, 401, "Unauthorized: invalid signature.");
-        return;
+      try {
+        if (!verify(rawBody, signature, parsedConfig)) {
+          console.log(rawBody);
+          logAndSend(res, 401, "Unauthorized: invalid signature.");
+          return;
+        }
+        debug("Signature is valid.");
+        req.body = parseEvent(rawBody);
+        next();
+      } catch (err) {
+        console.error(err);
+        logAndSend(res, 500, "Internal Server Error");
       }
-      debug("Signature is valid.");
-      req.body = parseEvent(rawBody);
-      next();
     });
   };
 }
