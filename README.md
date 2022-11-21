@@ -5,7 +5,7 @@ Express middleware for parsing Vehicle Detector Agent webhook requests and verif
 ## How to Install
 
 ```sh
-npm install --save @arcloud/wehicle-detector-agent-webhook-middleware
+npm install --save @arcloud/vehicle-detector-agent-webhook-middleware
 ```
 
 ## Usage
