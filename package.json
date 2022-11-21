@@ -9,6 +9,9 @@
     "build": "tsc -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "publishConfig": {
+    "@arcloud:registry": "https://gitlab.ar.local/api/v4/projects/333/packages/npm/"
+  },
   "keywords": [
     "anpr",
     "adaptive",
