@@ -1,6 +1,8 @@
 /src
+/test
 /.gitignore
 /README.md
 /DEVELOPMENT.md
 /tsconfig.json
 /.gitlab-ci.yml
+/coverage

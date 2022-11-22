@@ -7,7 +7,7 @@
     "clean": "shx rm -rf dist",
     "prebuild": "npm run clean",
     "build": "tsc -p .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "publishConfig": {
     "@arcloud:registry": "https://gitlab.ar.local/api/v4/projects/333/packages/npm/"
@@ -28,12 +28,14 @@
   "license": "MIT",
   "dependencies": {
     "debug": "^4.3.4",
-    "express": "^4.18.2",
-    "jwa": "^2.0.0"
+    "jest": "^29.3.1",
+    "jwa": "^2.0.0",
+    "ts-jest": "^29.0.3"
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "@types/express": "^4.17.14",
+    "@types/jest": "^29.2.3",
     "@types/jwa": "^2.0.0",
     "@types/node": "^18.11.9",
     "shx": "^0.3.4",
