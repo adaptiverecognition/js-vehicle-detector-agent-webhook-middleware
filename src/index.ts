@@ -21,10 +21,20 @@ const asymmetricAlgs = new Set([
 const debug = Debug("ar:signature-validator");
 
 // Types
+
+/**
+ * The algorithm used to sign the request.
+ */
 export type Algorithm = SymmetricAlgorithm | AsymmetricAlgorithm;
 
+/**
+ * A union of all supported symmetric algorithms.
+ */
 export type SymmetricAlgorithm = "HS256" | "HS384" | "HS512";
 
+/**
+ * A union of all supported asymmetric algorithms.
+ */
 export type AsymmetricAlgorithm =
   | "RS256"
   | "RS384"
@@ -36,15 +46,26 @@ export type AsymmetricAlgorithm =
   | "ES384"
   | "ES512";
 
+/**
+ * An object that contains the configuration for the signature validator.
+ */
 export type SignatureConfig =
   | SymmetricSignatureConfig
   | AsymmetricSignatureConfig;
 
+/**
+ * An object that contains the configuration for the signature validator when
+ * using a symmetric algorithm.
+ */
 export interface SymmetricSignatureConfig {
   algorithm: SymmetricAlgorithm;
   secret: string;
 }
 
+/**
+ * An object that contains the configuration for the signature validator when
+ * using an asymmetric algorithm.
+ */
 export interface AsymmetricSignatureConfig {
   algorithm: AsymmetricAlgorithm;
   publicKeyPath: string;
@@ -55,6 +76,10 @@ interface ParsedSignatureConfig {
   secret: string | Buffer;
 }
 
+/**
+ * An error that is thrown when the signature validator is configured
+ * incorrectly.
+ */
 export class SignatureConfigError extends Error {
   constructor(message: string) {
     super(message);
@@ -62,12 +87,19 @@ export class SignatureConfigError extends Error {
   }
 }
 
+/**
+ * An event received by the webhook. This is the type of `req.body` in route
+ * handlers that use the middleware.
+ */
 export interface WebhookEvent {
   detectedAt: Date;
   attachments: Attachment[];
   event: APIResult;
 }
 
+/**
+ * A binary file attachment.
+ */
 export interface Attachment {
   mimeType: string;
   data: Buffer;
@@ -79,13 +111,22 @@ interface WebhookRequestBody {
   event: APIResult;
 }
 
+/**
+ * The API result as received by the Vehicle Detector Agent.
+ */
 export interface APIResult {
   mmr: MMRResult;
   plate: PlateResult;
 }
 
+/**
+ * Vehicle category.
+ */
 export type MMRCategory = "UNK" | "BUS" | "CAR" | "HVT" | "LGT" | "VAN";
 
+/**
+ * Make and model recognition result.
+ */
 export interface MMRResult {
   found: boolean;
   category?: MMRCategory;
@@ -101,6 +142,9 @@ export interface MMRResult {
   proctime: number;
 }
 
+/**
+ * Plate category.
+ */
 export type PlateCategory =
   | "NONE"
   | "COMMON"
@@ -128,6 +172,9 @@ export type PlateCategory =
   | "LIMOUSINE"
   | "TEMP_TRANSIT";
 
+/**
+ * Plate recognition result.
+ */
 export interface PlateResult {
   found: boolean;
   bgColor: Color;
@@ -145,6 +192,9 @@ export interface PlateResult {
   unicodeText: string;
 }
 
+/**
+ * A single character in a plate.
+ */
 export interface PlateChar {
   bgColor: Color;
   color: Color;
@@ -153,12 +203,18 @@ export interface PlateChar {
   confidence: number;
 }
 
+/**
+ * An RGB color.
+ */
 export interface Color {
   r: number;
   g: number;
   b: number;
 }
 
+/**
+ * A quadrangular region of interest in the input image.
+ */
 export interface RegionOfInterest {
   bottomLeft: Coords;
   bottomRight: Coords;
@@ -166,12 +222,21 @@ export interface RegionOfInterest {
   topRight: Coords;
 }
 
+/**
+ * Coordinates of a point in the input image.
+ */
 export interface Coords {
   x: number;
   y: number;
 }
 
 // Public functions
+
+/**
+ * Express middleware that validates the signature of a webhook request.
+ * @param config The configuration for the signature validator.
+ * @returns The configured middleware.
+ */
 export function webhookSignatureValidator(config: SignatureConfig) {
   const parsedConfig = parseConfig(config);
   logConfig(parsedConfig);
@@ -211,6 +276,14 @@ export function webhookSignatureValidator(config: SignatureConfig) {
   };
 }
 
+/**
+ * A helper function that verifies the signature of a webhook request. You can
+ * use this function if you use frameworks other than Express.
+ * @param payload The raw request body.
+ * @param signature The contents of the signature header.
+ * @param config The configuration for the signature validator.
+ * @returns `true` if the signature is valid, `false` otherwise.
+ */
 export function verifySignature(
   payload: string,
   signature: string,
