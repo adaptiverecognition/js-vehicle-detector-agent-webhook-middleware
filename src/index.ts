@@ -387,7 +387,3 @@ function verify(
 function isSymmetric(alg: Algorithm): boolean {
   return symmetricAlgs.has(alg);
 }
-
-function isAsymmetric(alg: Algorithm): boolean {
-  return asymmetricAlgs.has(alg);
-}

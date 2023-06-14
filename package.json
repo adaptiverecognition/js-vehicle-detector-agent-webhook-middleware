@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "shx rm -rf dist",
     "prebuild": "npm run clean",
+    "lint": "eslint .",
     "build": "tsc -p .",
     "test": "jest"
   },
@@ -38,6 +39,10 @@
     "@types/jest": "^29.2.3",
     "@types/jwa": "^2.0.0",
     "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
     "shx": "^0.3.4",
     "typescript": "^4.9.3"
   }
